@@ -12,9 +12,9 @@ AC_PREREQ(2.65)
 #
 m4_define([cppunit_major_version],[1])
 m4_define([cppunit_minor_version],[13])
-m4_define([cppunit_micro_version],[0])
-m4_define([cppunit_interface_age],[0])
-m4_define([cppunit_binary_age],[0])
+m4_define([cppunit_micro_version],[1])
+m4_define([cppunit_interface_age],[1])
+m4_define([cppunit_binary_age],[1])
 m4_define([cppunit_version],[cppunit_major_version.cppunit_minor_version.cppunit_micro_version])
 
 AC_INIT([cppunit],[cppunit_version])
