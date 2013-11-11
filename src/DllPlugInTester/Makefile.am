@@ -1,4 +1,7 @@
-EXTRA_DIST = DllPlugInTester.dsp DllPlugInTesterTest.dsp
+EXTRA_DIST = DllPlugInTester.dsp \
+	     DllPlugInTesterTest.dsp \
+	     DllPlugInTester.vcproj \
+	     DllPlugInTester.vcxproj
 
 INCLUDES = -I$(top_builddir)/include -I$(top_srcdir)/include
 

@@ -22,6 +22,7 @@ EXTRA_DIST = BUGS INSTALL-unix INSTALL-WIN32.txt CodingGuideLines.txt	\
 	contrib/xml-xsl/tests.xml \
 	contrib/xml-xsl/report.xsl \
 	src/CppUnitLibraries.dsw \
+	src/CppUnitLibraries2010.sln \
 	lib/.keepme
 
 m4sources = \
