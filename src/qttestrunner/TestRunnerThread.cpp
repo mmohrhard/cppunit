@@ -1,38 +1,61 @@
-// //////////////////////////////////////////////////////////////////////////
-// Implementation file TestRunnerThread.cpp for class TestRunnerThread
-// (c)Copyright 2000, Baptiste Lepilleur.
-// Created: 2001/09/22
-// //////////////////////////////////////////////////////////////////////////
+#include <QMutex>
+#include <QMutexLocker>
 
 #include "TestRunnerThread.h"
-#include "TestRunnerThreadFinishedEvent.h"
 
+//
+// TestRunnerThreadPrivate
+//
 
-TestRunnerThread::TestRunnerThread( CPPUNIT_NS::Test *testToRun,
-                                    CPPUNIT_NS::TestResult *result,
-                                    QObject *eventTarget,
-                              TestRunnerThreadFinishedEvent *finishedEvent ) :
-    _testToRun( testToRun ),
-    _result( result ),
-    _eventTarget( eventTarget ),
-    _finishedEvent( finishedEvent )
+class TestRunnerThreadPrivate
 {
-  start();
-}
+    typedef CPPUNIT_NS::Test Test;
+    typedef CPPUNIT_NS::TestResult TestResult;
 
+public:
+    TestRunnerThreadPrivate()
+        : _test(NULL)
+        , _result(NULL)
+        , _mutex()
+    {}
+
+public:
+    Test *_test;
+    TestResult *_result;
+    QMutex _mutex;
+};
+
+//
+// TestRunnerThread
+//
+
+TestRunnerThread::TestRunnerThread(QObject *parent)
+    : QThread(parent)
+    , _d(new TestRunnerThreadPrivate)
+{}
 
 TestRunnerThread::~TestRunnerThread()
+{}
+
+void TestRunnerThread::adviseToStop()
 {
+    if (_d->_result)
+        _d->_result->stop();
 }
 
-
-void 
-TestRunnerThread::run()
+void TestRunnerThread::setTestInformation(Test *testToRun, TestResult *result)
 {
-  _testToRun->run( _result );
+    QMutexLocker lock(&_d->_mutex);
+    _d->_test = testToRun;
+    _d->_result = result;
+}
 
-  // Signal TestRunnerModel GUI thread
-  QThread::postEvent( _eventTarget, _finishedEvent );
-  _eventTarget = NULL;
-  _finishedEvent = NULL;
+void TestRunnerThread::run()
+{
+    QMutexLocker lock(&_d->_mutex);
+    if (_d->_test != NULL && _d->_result != NULL)
+        _d->_test->run(_d->_result);
+
+    _d->_test = NULL;
+    _d->_result = NULL;
 }

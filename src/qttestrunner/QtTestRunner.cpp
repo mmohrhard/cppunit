@@ -1,70 +1,86 @@
-// //////////////////////////////////////////////////////////////////////////
-// Implementation file QtTestRunner.cpp for class QtTestRunner
-// (c)Copyright 2000, Baptiste Lepilleur.
-// Created: 2001/09/19
-// //////////////////////////////////////////////////////////////////////////
+#include <QApplication>
 
-#include <qapplication.h>
 #include <cppunit/TestSuite.h>
 #include <cppunit/ui/qt/QtTestRunner.h>
-#include "TestRunnerDlgImpl.h"
-#include "TestRunnerModel.h"
 
+#include "TestRunnerWindow.h"
 
 CPPUNIT_NS_BEGIN
 
-QtTestRunner::QtTestRunner() :
-  _suite( new CPPUNIT_NS::TestSuite( "All Tests" ) ),
-  _tests( new Tests() )
-{
-}
+//
+// QtTestRunnerPrivate
+//
 
+// Define a few types for better readability (and usability) later on
+typedef Test* TestPtr;
+typedef QVector< TestPtr > TestPtrList;
+typedef QVectorIterator< TestPtr > TestPtrListIterator;
+
+class QtTestRunnerPrivate
+{
+    typedef QScopedPointer< TestSuite > TestSuitePtr;
+
+public:
+    QtTestRunnerPrivate()
+        : _suite(new TestSuite("All Tests"))
+        , _tests()
+        , _dialog()
+    {}
+
+    ~QtTestRunnerPrivate()
+    {}
+
+    Test *rootTest()
+    {
+        if (_tests.size() != 1)
+        {
+            TestPtrListIterator it(_tests);
+            while (it.hasNext())
+            {
+                _suite->addTest(it.next());
+            }
+
+            _tests.clear();
+            return _suite.data();
+        }
+
+        return _tests.at(0);
+    }
+
+public:
+    TestSuitePtr _suite;
+    TestPtrList _tests;
+    QScopedPointer<TestRunnerWindow> _dialog;
+};
+
+//
+// QtTestRunner
+//
+
+QtTestRunner::QtTestRunner()
+    : _d(new QtTestRunnerPrivate)
+{}
 
 QtTestRunner::~QtTestRunner()
 {
-  delete _suite;
-
-  Tests::iterator it = _tests->begin();
-  while ( it != _tests->end() )
-    delete *it++;
-
-  delete _tests;
+    TestPtrListIterator it(_d->_tests);
+    while (it.hasNext())
+        delete it.next();
 }
 
-
-Test *
-QtTestRunner::getRootTest()
+void QtTestRunner::run(bool autorun)
 {
-  if ( _tests->size() != 1 )
-  {
-    Tests::iterator it = _tests->begin();
-    while ( it != _tests->end() )
-      _suite->addTest( *it++ );
-    _tests->clear();
-    return _suite;
-  }
-  return (*_tests)[0];
+    _d->_dialog.reset(new TestRunnerWindow(_d->rootTest()));
+
+    if (autorun)
+        _d->_dialog->startTesting();
+
+    _d->_dialog->show();
 }
 
-
-void 
-QtTestRunner::run( bool autoRun )
+void QtTestRunner::addTest(Test *test)
 {
-  TestRunnerDlg *dlg = new TestRunnerDlg( qApp->mainWidget(), 
-                                          "QtTestRunner", 
-                                          TRUE );
-  dlg->setModel( new TestRunnerModel( getRootTest() ),
-                 autoRun );
-  dlg->exec();
-  delete dlg;
+    _d->_tests.append(test);
 }
-
-
-void 
-QtTestRunner::addTest( CPPUNIT_NS::Test *test )
-{
-  _tests->push_back( test );
-}
-
 
 CPPUNIT_NS_END

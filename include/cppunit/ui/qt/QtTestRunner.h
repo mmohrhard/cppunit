@@ -1,85 +1,69 @@
-// //////////////////////////////////////////////////////////////////////////
-// Header file TestRunner.h for class TestRunner
-// (c)Copyright 2000, Baptiste Lepilleur.
-// Created: 2001/09/19
-// //////////////////////////////////////////////////////////////////////////
-#ifndef CPPUNIT_QTUI_QTTESTRUNNER_H
-#define CPPUNIT_QTUI_QTTESTRUNNER_H
+#ifndef CPPUNIT_QTTESTRUNNER_H
+#define CPPUNIT_QTTESTRUNNER_H
 
-#include <cppunit/portability/CppUnitVector.h>
-#include "Config.h"
+#include <QScopedPointer>
+
+#include <cppunit/Portability.h>
+#include <cppunit/ui/qt/Config.h>
 
 CPPUNIT_NS_BEGIN
 
+class Test;
 
-  class Test;
-  class TestSuite;
-
-
-/*! 
- * \brief QT test runner.
+/*!
+ * \brief Qt test runner.
  * \ingroup ExecutingTest
+ *
+ * This test runner uses the Qt GUI framework for running and displaying registered tests.
  *
  * Here is an example of usage:
  * \code
  * #include <cppunit/extensions/TestFactoryRegistry.h>
  * #include <cppunit/ui/qt/TestRunner.h>
  *
- * [...]
- *
- * void 
- * QDepWindow::runTests()
+ * void main(int argc, char*argv[])
  * {
- *   CppUnit::QtUi::TestRunner runner;
- *   runner.addTest( CppUnit::TestFactoryRegistry::getRegistry().makeTest() );
- *   runner.run( true );
+ *     QApplication app(argc, argv);
+ *
+ *     CppUnit::QtTestRunner runner;
+ *     runner.addTest(CppUnit::TestFactoryRegistry::getRegistry().makeTest());
+ *     runner.run(true);
+ *
+ *     return app.exec();
  * }
  * \endcode
- *
  */
 class QTTESTRUNNER_API QtTestRunner
 {
+    Q_DISABLE_COPY(QtTestRunner)
+
 public:
-  /*! Constructs a TestRunner object.
-   */
-  QtTestRunner();
-
-  /*! Destructor.
-   */
-  virtual ~QtTestRunner();
-
-  void run( bool autoRun =false );
-
-  void addTest( Test *test );
-
-private:
-  /// Prevents the use of the copy constructor.
-  QtTestRunner( const QtTestRunner &copy );
-
-  /// Prevents the use of the copy operator.
-  void operator =( const QtTestRunner &copy );
-
-  Test *getRootTest();
-
-private:
-  typedef CppUnitVector<Test *> Tests;
-  Tests *_tests;
-
-  TestSuite *_suite;
-};
-
-
-#if CPPUNIT_HAVE_NAMESPACES
-  namespace QtUi
-  {
-    /*! Qt TestRunner (DEPRECATED).
-     * \deprecated Use CppUnit::QtTestRunner instead.
+    /*!
+     * \brief Constructs a TestRunner object.
      */
-    typedef CPPUNIT_NS::QtTestRunner TestRunner;
-  }
-#endif
+    QtTestRunner();
 
+    /*!
+     * \brief Destructor.
+     */
+    ~QtTestRunner();
+
+    /*!
+     * \brief Runs the specified test (and all of its child tests)
+     * \param autorun When set to \c true the tests are automatically run the first time
+     */
+    void run(bool autorun = false);
+
+    /*!
+     * \brief Adds a (top-level) test to the list of tests to run
+     * \param test A test that shall be executed
+     */
+    void addTest(Test *test);
+
+private:
+    QScopedPointer<class QtTestRunnerPrivate> _d;
+};
 
 CPPUNIT_NS_END
 
-#endif  // CPPUNIT_QTUI_QTTESTRUNNER_H
+#endif  // CPPUNIT_QTTESTRUNNER_H

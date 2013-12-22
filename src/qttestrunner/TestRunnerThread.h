@@ -1,55 +1,54 @@
-// //////////////////////////////////////////////////////////////////////////
-// Header file TestRunnerThread.h for class TestRunnerThread
-// (c)Copyright 2000, Baptiste Lepilleur.
-// Created: 2001/09/22
-// //////////////////////////////////////////////////////////////////////////
 #ifndef TESTRUNNERTHREAD_H
 #define TESTRUNNERTHREAD_H
 
-#include <qthread.h>
+#include <QScopedPointer>
+#include <QThread>
+
 #include <cppunit/Test.h>
 #include <cppunit/TestResult.h>
-class QObject;
-class TestRunnerThreadFinishedEvent;
 
-
-/*! \class TestRunnerThread
- * \brief This class represents the thread used to run TestCase.
+/**
+ * \class TestRunnerThread
+ * \brief This class represents the thread used to run the test cases asynchronously.
  */
 class TestRunnerThread : public QThread
 {
+    Q_OBJECT
+    Q_DISABLE_COPY(TestRunnerThread)
+
+    typedef CPPUNIT_NS::Test Test;
+    typedef CPPUNIT_NS::TestResult TestResult;
+
 public:
-  /*! Constructs a TestRunnerThread object.
-   */
-  TestRunnerThread( CPPUNIT_NS::Test *testToRun,
-                    CPPUNIT_NS::TestResult *result,
-                    QObject *eventTarget,
-                    TestRunnerThreadFinishedEvent *finishedEvent );
+    /*!
+     * \brief Constructs a TestRunner thread object.
+     * \param parent A pointer to a parent QObject
+     */
+    TestRunnerThread(QObject *parent = 0);
 
-  /// Destructor.
-  virtual ~TestRunnerThread();
+    /*!
+     * \brief Destructor
+     */
+    ~TestRunnerThread();
+
+public slots:
+    /*!
+     * \brief Stops a running test
+     */
+    void adviseToStop();
+
+    /*!
+     * \brief Sets information for the test to run and the output result
+     * \param testToRun A pointer to a Test which should be run
+     * \param result A pointer to a TestResult object.
+     */
+    void setTestInformation(Test *testToRun, TestResult *result);
 
 private:
-  /// Prevents the use of the copy constructor.
-  TestRunnerThread( const TestRunnerThread &copy );
-
-  /// Prevents the use of the copy operator.
-  void operator =( const TestRunnerThread &copy );
-
-  void run();
+    void run();
 
 private:
- CPPUNIT_NS::Test *_testToRun;
- CPPUNIT_NS::TestResult *_result;
- QObject *_eventTarget;
- TestRunnerThreadFinishedEvent *_finishedEvent;
+    QScopedPointer<class TestRunnerThreadPrivate> _d;
 };
 
-
-
-// Inlines methods for TestRunnerThread:
-// -------------------------------------
-
-
-
-#endif  // TESTRUNNERTHREAD_H
+#endif // TESTRUNNERTHREAD_H
