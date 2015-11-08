@@ -75,6 +75,12 @@ cppunittestmain_SOURCES = \
 	XmlUniformiserTest.h \
 	XmlUniformiserTest.cpp
 
+if WITH_OPTIONAL_FEATURES
+cppunittestmain_SOURCES += \
+	TestParameterizedTestCaller.cpp \
+	TestParameterizedTestCaller.h
+endif
+
 cppunittestmain_LDADD= \
   $(top_builddir)/src/cppunit/libcppunit.la \
   $(LIBADD_DL)

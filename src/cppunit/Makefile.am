@@ -61,6 +61,12 @@ libcppunit_la_SOURCES = \
   XmlOutputterHook.cpp \
   Win32DynamicLibraryManager.cpp
 
+if WITH_OPTIONAL_FEATURES
+
+libcppunit_la_SOURCES += \
+   TestParameterizedRunner.cpp
+endif
+
 libcppunit_la_LDFLAGS= \
  -no-undefined -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
  -release $(LT_RELEASE) $(LIBADD_DL)

@@ -38,5 +38,10 @@ libcppunitinclude_HEADERS =  \
 	XmlOutputter.h \
 	XmlOutputterHook.h
 
+if WITH_OPTIONAL_FEATURES
+libcppunitinclude_HEADERS +=  \
+	ParameterizedTestCaller.h
+endif
+
 dist-hook:
 	rm -f $(distdir)/config-auto.h
