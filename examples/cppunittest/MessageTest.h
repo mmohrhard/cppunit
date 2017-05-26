@@ -28,6 +28,8 @@ class MessageTest : public CPPUNIT_NS::TestFixture
   CPPUNIT_TEST( testDetailsSome );
   CPPUNIT_TEST( testEqual );
   CPPUNIT_TEST( testNotEqual );
+  CPPUNIT_TEST( testCustomMessageType );
+  CPPUNIT_TEST( testOStreamMessage );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -59,6 +61,9 @@ public:
 
   void testEqual();
   void testNotEqual();
+
+  void testCustomMessageType();
+  void testOStreamMessage();
 
 private:
   /// Prevents the use of the copy constructor.

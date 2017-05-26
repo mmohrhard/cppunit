@@ -232,3 +232,30 @@ MessageTest::testNotEqual()
   CPPUNIT_ASSERT( message1 != message2 );
   CPPUNIT_ASSERT( !(message1 != message1) );
 }
+
+
+struct Foo
+{
+    std::string s;
+};
+CPPUNIT_NS_BEGIN
+static std::string message_to_string(const Foo& m)
+{
+    return m.s;
+}
+CPPUNIT_NS_END
+
+void
+MessageTest::testCustomMessageType()
+{
+  Foo foo { "xxxx" };
+  CPPUNIT_ASSERT_MESSAGE( foo, true );
+}
+
+void
+MessageTest::testOStreamMessage()
+{
+  std::ostringstream ost;
+  ost << "xxx" << "yyy";
+  CPPUNIT_ASSERT_MESSAGE( ost, true );
+}

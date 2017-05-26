@@ -119,6 +119,40 @@ struct assertion_traits<double>
 };
 
 
+/*! \brief Message traits used by CPPUNIT_ASSERT* macros.
+ *
+ * Here is an example of specialising these traits:
+ *
+ * \code
+ * CPPUNIT_NS_BEGIN
+ * static std::string message_to_string(const MyType& m)
+ * {
+ *     return m.getStr();
+ * };
+ * CPPUNIT_NS_END
+ * \endcode
+ */
+inline std::string message_to_string( const std::string& s )
+{
+    return s;
+}
+inline std::string message_to_string( const OStream& out )
+{
+    OStringStream ost;
+    ost << out.rdbuf();
+    return ost.str();
+}
+/// for calls to addDetail
+inline AdditionalMessage message_to_string( const AdditionalMessage& msg )
+{
+    return msg;
+}
+/// otherwise calls with string literals are ambiguous
+inline std::string message_to_string( const char * s )
+{
+    return s;
+}
+
 /*! \brief (Implementation) Asserts that two objects of the same type are equals.
  * Use CPPUNIT_ASSERT_EQUAL instead of this function.
  * \sa assertion_traits, Asserter::failNotEqual().
@@ -260,7 +294,7 @@ void assertGreaterEqual( const T& expected,
                                   CPPUNIT_NS::Message( "assertion failed", \
                                                        "Expression: "      \
                                                        #condition,         \
-                                                       message ),          \
+                                                       CPPUNIT_NS::message_to_string(message) ),          \
                                   CPPUNIT_SOURCELINE() ) )
 
 /** Fails with the specified message.
@@ -269,7 +303,7 @@ void assertGreaterEqual( const T& expected,
  */
 #define CPPUNIT_FAIL( message )                                         \
   ( CPPUNIT_NS::Asserter::fail( CPPUNIT_NS::Message( "forced failure",  \
-                                                     message ),         \
+                                                     CPPUNIT_NS::message_to_string(message) ),         \
                                 CPPUNIT_SOURCELINE() ) )
 
 #ifdef CPPUNIT_ENABLE_SOURCELINE_DEPRECATED
@@ -323,7 +357,7 @@ void assertGreaterEqual( const T& expected,
   ( CPPUNIT_NS::assertEquals( (expected),              \
                               (actual),                \
                               CPPUNIT_SOURCELINE(),    \
-                              (message) ) )
+                              CPPUNIT_NS::message_to_string(message) ) )
 #endif
 
 /** Asserts that actual is less than expected, provides additional message on failure.
@@ -457,7 +491,7 @@ void assertGreaterEqual( const T& expected,
                                     (actual),              \
                                     (delta),               \
                                     CPPUNIT_SOURCELINE(),  \
-                                    (message) ) )
+                                    CPPUNIT_NS::message_to_string(message) ) )
 
 
 /** Asserts that the given expression throws an exception of the specified type. 
@@ -499,7 +533,7 @@ void assertGreaterEqual( const T& expected,
    do {                                                                       \
       bool cpputCorrectExceptionThrown_ = false;                              \
       CPPUNIT_NS::Message cpputMsg_( "expected exception not thrown" );       \
-      cpputMsg_.addDetail( message );                                         \
+      cpputMsg_.addDetail( CPPUNIT_NS::message_to_string(message) );                                         \
       cpputMsg_.addDetail( "Expected: "                                       \
                            CPPUNIT_GET_PARAMETER_STRING( ExceptionType ) );   \
                                                                               \
@@ -551,7 +585,7 @@ void assertGreaterEqual( const T& expected,
 # define CPPUNIT_ASSERT_NO_THROW_MESSAGE( message, expression )               \
    do {                                                                       \
       CPPUNIT_NS::Message cpputMsg_( "unexpected exception caught" );         \
-      cpputMsg_.addDetail( message );                                         \
+      cpputMsg_.addDetail( CPPUNIT_NS::message_to_string(message) );                                         \
                                                                               \
       try {                                                                   \
          expression;                                                          \
