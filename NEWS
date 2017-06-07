@@ -1,3 +1,10 @@
+  New in CppUnit 1.13.3:
+  ---------------------
+
+* Test runner
+
+  - fix crashes in Windows Visual Studio test runner with 64 bit builds
+
   New in CppUnit 1.13.2:
   ---------------------
 
