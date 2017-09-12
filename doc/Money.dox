@@ -69,7 +69,7 @@ hold the code we're going to build. Create \c configure.in and
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(Makefile.am)
 AM_INIT_AUTOMAKE(money,0.1)
-AM_PATH_CPPUNIT(1.9.6)
+PKG_CHECK_MODULES([CPPUNIT], [cppunit >= 1.11.6])
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_INSTALL
@@ -82,7 +82,7 @@ TESTS = MoneyApp
 check_PROGRAMS = $(TESTS)
 MoneyApp_SOURCES = Money.h MoneyTest.h MoneyTest.cpp MoneyApp.cpp
 MoneyApp_CXXFLAGS = $(CPPUNIT_CFLAGS)
-MoneyApp_LDFLAGS = $(CPPUNIT_LIBS) -ldl\endverbatim
+MoneyApp_LDADD = $(CPPUNIT_LIBS)\endverbatim
 
 
   
