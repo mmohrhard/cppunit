@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:param name="testsuite" select="'from cppunit'" as="xs:string"/>
 	<xsl:output method="xml" indent="yes"/>
 	<xsl:template match="/">
 		<testsuite>
@@ -12,7 +13,7 @@
 			<xsl:attribute name="tests">
 				<xsl:value-of select="TestRun/Statistics/Tests"/>
 			</xsl:attribute>
-			<xsl:attribute name="name">from cppunit</xsl:attribute>
+			<xsl:attribute name="name"><xsl:value-of select="$testsuite"/></xsl:attribute>
 			<xsl:apply-templates/>
 		</testsuite>
 	</xsl:template>
@@ -35,7 +36,7 @@
 				</xsl:attribute>
 				<xsl:value-of select="Message"/>
 				File:<xsl:value-of select="Location/File"/>
-				Line:<xsl:value-of select="Location/Line"/>			
+				Line:<xsl:value-of select="Location/Line"/>
 			</error>
 		</testcase>
 	</xsl:template>

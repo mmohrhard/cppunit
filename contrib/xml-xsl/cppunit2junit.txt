@@ -1,4 +1,4 @@
- A simple XSLT file to transform cppunit XmlOutputer
+A simple XSLT file to transform cppunit XmlOutputer
 result file, to the same format that the apache Ant
 junit task produce:
 <target name="test">
@@ -9,6 +9,10 @@ fork="true">
 
 This format allows to manage result file with the Ant
 junitreport task.
+example usage with xsltproc:
+
+$ xsltproc -o TEST-cxx-results.xml --stringparam testsuite test.cxx cppunit2junit.xsl temp-cxx-results.xml
+
 example usage inside a ant task:
 
 task similar to the junit task:
@@ -33,8 +37,10 @@ in="${dev.build}/test/data/temp-cxx-results.xml"
 
 out="${dev.build}/test/data/TEST-cxx-results.xml"
 
-style="${dev.lib}/cxx/cppunit/cppunit2junit.xsl"/>
+style="${dev.lib}/cxx/cppunit/cppunit2junit.xsl">
 
+<param name="testsuite" value="test.cxx"/>
+</xslt>
 <fail if="test.failed">
 Unit tests failed. For error messages, check
 the log files in
