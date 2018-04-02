@@ -10,7 +10,9 @@
 #define NOUSER
 #define NOKERNEL
 #define NOSOUND
+#ifndef NOMINMAX
 #define NOMINMAX
+#endif
 #include <windows.h>
 #endif
 

@@ -146,7 +146,9 @@ typedef CppUnitTestPlugIn *(*TestPlugInSignature)();
 #define NOUSER
 #define NOKERNEL
 #define NOSOUND
+#ifndef NOMINMAX
 #define NOMINMAX
+#endif
 #define BLENDFUNCTION void    // for mingw & gcc
 #include <windows.h>
 #endif
