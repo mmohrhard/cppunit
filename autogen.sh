@@ -33,8 +33,6 @@ if [ "$LIBTOOLIZEFOUND" = "0" ]; then
 	exit 1
 fi
 
-rm -rf autom4te*.cache
-
 $LIBTOOLIZE --force --copy || {
 	echo "error: libtoolize failed"
 	exit 1
