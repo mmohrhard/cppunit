@@ -32,7 +32,6 @@ m4internal = \
 	m4/ac_cxx_string_compare_string_first.m4 \
 	m4/ac_dll.m4 \
 	m4/ax_cxx_gcc_abi_demangle.m4 \
-	m4/ax_cxx_have_isfinite.m4 \
 	m4/ax_cxx_have_sstream.m4 \
 	m4/ax_cxx_namespaces.m4 \
 	m4/ax_cxx_compile_stdcxx_11.m4 \
