@@ -77,7 +77,7 @@ name is cppunitd.lib. The debug configuration cppunit dll name is cppunitd_dll.l
 Building:
 ---------
 
-* Open the src/CppUnitLibraries.dsw workspace in VC++.
+* Open the src/CppUnitLibrariesXXXX.sln workspace in VC++.
 * In the 'Build' menu, select 'Batch Build...'
 * In the batch build dialog, select all projects and press the build button.
 * The resulting libraries can be found in the lib/ directory.
