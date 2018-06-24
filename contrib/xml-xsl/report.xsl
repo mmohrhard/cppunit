@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding='shift_jis' standalone='yes' ?>
+�ｻｿ<?xml version="1.0" encoding='utf-8' standalone='yes' ?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xml:lang="ja">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <xsl:template match="/">
 <HTML>
 <HEAD>
 <TITLE>Test Report</TITLE>
 <STYLE>
-TABLE				{ color:#222222; font-size:10pt; font-family:'ＭＳ ゴシック' 'sanserif'; }
+TABLE				{ color:#222222; font-size:10pt; }
 TH					{ font-weight:normal; color:#FFFFFF; background-color:#888888; }
 TR.check			{ background-color:#EEEEEE }
 TD.check			{ background-color:#EEEEEE }
-H1					{ color:#111111; font-family:'Times New Roman' 'ＭＳ Ｐ明朝' 'serif'; border-style:solid; border-width:0px; border-bottom-width:3px; border-bottom-color:#444488; }
-H2					{ color:#222222; font-family:'Times New Roman' 'ＭＳ Ｐ明朝' 'serif'; border-style:solid; border-width:0px; border-bottom-width:2px; border-bottom-color:#444488; }
-H3					{ color:#333333; font-family:'Times New Roman' 'ＭＳ Ｐ明朝' 'serif'; border-style:solid; border-width:0px; border-bottom-width:1px; border-bottom-color:#444488; margin-bottom:8px; }
-H4					{ color:#444444; font-family:'Times New Roman' 'ＭＳ Ｐ明朝' 'serif'; border-style:solid; border-width:0px; border-bottom-width:1px; border-bottom-color:#CCCCDD; margin-bottom:8px; }
-H5					{ color:#555555; font-family:'Times New Roman' 'ＭＳ Ｐ明朝' 'serif'; border-style:solid; border-width:0px; border-bottom-width:1px; border-bottom-color:#EEEEFF; margin-bottom:8px; }
-H6					{ color:#666666; font-family:'Times New Roman' 'ＭＳ Ｐ明朝' 'serif'; border-style:solid; border-width:0px; border-bottom-width:1px; border-bottom-color:#F8F8FF; margin-bottom:8px; }
+H1					{ color:#111111; font-family:'Times New Roman' 'serif'; border-style:solid; border-width:0px; border-bottom-width:3px; border-bottom-color:#444488; }
+H2					{ color:#222222; font-family:'Times New Roman' 'serif'; border-style:solid; border-width:0px; border-bottom-width:2px; border-bottom-color:#444488; }
+H3					{ color:#333333; font-family:'Times New Roman' 'serif'; border-style:solid; border-width:0px; border-bottom-width:1px; border-bottom-color:#444488; margin-bottom:8px; }
+H4					{ color:#444444; font-family:'Times New Roman' 'serif'; border-style:solid; border-width:0px; border-bottom-width:1px; border-bottom-color:#CCCCDD; margin-bottom:8px; }
+H5					{ color:#555555; font-family:'Times New Roman' 'serif'; border-style:solid; border-width:0px; border-bottom-width:1px; border-bottom-color:#EEEEFF; margin-bottom:8px; }
+H6					{ color:#666666; font-family:'Times New Roman' 'serif'; border-style:solid; border-width:0px; border-bottom-width:1px; border-bottom-color:#F8F8FF; margin-bottom:8px; }
 
 SPAN.good			{ color:#006666; font-weight:bold; }
 SPAN.critical		{ color:#880000; font-weight:bold; }
