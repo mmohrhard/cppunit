@@ -40,6 +40,11 @@ public:
 
   virtual ~TestSuiteBuilderContextBase();
 
+  TestSuiteBuilderContextBase(TestSuiteBuilderContextBase const &) = default;
+  TestSuiteBuilderContextBase(TestSuiteBuilderContextBase &&) = default;
+  TestSuiteBuilderContextBase & operator =(TestSuiteBuilderContextBase const &) = default;
+  TestSuiteBuilderContextBase & operator =(TestSuiteBuilderContextBase &&) = default;
+
   /*! \brief Adds a test to the fixture suite.
    *
    * \param test Test to add to the fixture suite. Must not be \c NULL.
