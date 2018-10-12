@@ -240,6 +240,29 @@ public:									       \
   private: /* dummy typedef so that the macro can still end with ';'*/         \
     typedef int CppUnitDummyTypedefForSemiColonEnding__
 
+/*! \brief Define test suite with a single test.
+ *
+ * This macro declares a new test suite with a single test and a single parent
+ * class.  Use CPPUNIT_TEST_SUITE(), CPPUNIT_TEST() and
+ * CPPUNIT_TEST_SUITE_END() instead if you wish to include more tests in the
+ * suite. The benefit of using this macro is that you don't have to declare,
+ * register and define your test name manually, so you don't repeat yourself.
+ *
+ * \param TestClass Base class. This type \b MUST be derived from TestFixture.
+ * \param TestName Name of the test.
+ * \see CPPUNIT_TEST_SUITE, CPPUNIT_TEST, CPPUNIT_TEST_SUITE_END
+ */
+#define CPPUNIT_TEST_FIXTURE(TestClass, TestName)                              \
+    class TestName : public TestClass                                          \
+    {                                                                          \
+    public:                                                                    \
+        void TestBody();                                                       \
+        CPPUNIT_TEST_SUITE(TestName);                                          \
+        CPPUNIT_TEST(TestBody);                                                \
+        CPPUNIT_TEST_SUITE_END();                                              \
+    };                                                                         \
+    CPPUNIT_TEST_SUITE_REGISTRATION(TestName);                                 \
+    void TestName::TestBody()
 
 /*! \brief Add a test to the suite (for custom test macro).
  *

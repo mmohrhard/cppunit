@@ -45,3 +45,18 @@ void ExampleTestCase::testEquals()
   CPPUNIT_ASSERT_EQUAL( 12, 13 );
   CPPUNIT_ASSERT_DOUBLES_EQUAL( 12.0, 11.99, 0.5 );
 }
+
+class FixtureTest : public CPPUNIT_NS::TestFixture
+{
+};
+
+CPPUNIT_TEST_FIXTURE(FixtureTest, testEquals)
+{
+  CPPUNIT_ASSERT_EQUAL( 12, 12 );
+}
+
+CPPUNIT_TEST_FIXTURE(FixtureTest, testAdd)
+{
+  double result = 2.0 + 2.0;
+  CPPUNIT_ASSERT( result == 4.0 );
+}
