@@ -551,7 +551,7 @@ void assertGreaterEqual( const T& expected,
       }                                                                       \
                                                                               \
       if ( cpputCorrectExceptionThrown_ )                                     \
-         break;                                                               \
+	    { break; }                                                        \
                                                                               \
       CPPUNIT_NS::Asserter::fail( cpputMsg_,                                  \
                                   CPPUNIT_SOURCELINE() );                     \
