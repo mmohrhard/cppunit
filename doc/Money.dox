@@ -19,24 +19,26 @@
 \subsection sec_install Compiling and installing CppUnit libaries
 
 In the following document, $CPPUNIT is the directory where you unpacked %CppUnit:
+~~~~~
 $CPPUNIT/:
-	include/
-	lib/
-	src/
-		cppunit/
+  include/
+  lib/
+  src/
+    cppunit/
+~~~~~
 
 First, you need to compile %CppUnit libraries:
-- Open the $CPPUNIT/src/CppUnitLibraries.dsw workspace in VC++.
+- Open the `$CPPUNIT/src/CppUnitLibraries.dsw` workspace in VC++.
 - In the 'Build' menu, select 'Batch Build...'
 - In the batch build dialog, select all projects and press the build button.
-- The resulting libraries can be found in the $CPPUNIT/lib/ directory.
+- The resulting libraries can be found in the `$CPPUNIT/lib/` directory.
 
 Once it is done, you need to tell VC++ where are the includes and libraries
 to use them in other projects. Open the 'Tools/Options...' dialog, and in the
 'Directories' tab, select 'include files' in the combo. Add a new entry that
-points to $CPPUNIT/include/. Change to 'libraries files' in the combo and 
-add a new entry for $CPPUNIT/lib/. Repeat the process with 'source files' 
-and add $CPPUNIT/src/cppunit/.
+points to `$CPPUNIT/include/`. Change to 'libraries files' in the combo and 
+add a new entry for `$CPPUNIT/lib/`. Repeat the process with 'source files' 
+and add `$CPPUNIT/src/cppunit/`.
 
 \subsection sec_getting_started Getting started
 
@@ -64,7 +66,7 @@ create our build environment. Create a directory somewhere to
 hold the code we're going to build. Create \c configure.in and 
 \c Makefile.am in that directory to get started.
 
-<tt>configure.in</tt>
+<tt>configure.ac</tt>
 \verbatim
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT([money],[0.1])
@@ -101,46 +103,45 @@ testing:
 
 <tt>MoneyApp.cpp</tt>
 \code
-#include "stdafx.h"
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
 
 
-int main(int argc, char* argv[])
+int main()
 {
   // Get the top level suite from the registry
-  CppUnit::Test *suite = CppUnit::TestFactoryRegistry::getRegistry().makeTest();
+  CPPUNIT_NS::Test *suite = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
 
   // Adds the test to the list of test to run
-  CppUnit::TextUi::TestRunner runner;
+  CPPUNIT_NS::TextUi::TestRunner runner;
   runner.addTest( suite );
 
   // Change the default outputter to a compiler error format outputter
-  runner.setOutputter( new CppUnit::CompilerOutputter( &runner.result(),
-                                                       std::cerr ) );
-  // Run the tests.
+  runner.setOutputter( new CPPUNIT_NS::CompilerOutputter( &runner.result(),
+                                                          CPPUNIT_NS::stdCOut() ) );
+  // Run the test.
   bool wasSucessful = runner.run();
 
   // Return error code 1 if the one of test failed.
   return wasSucessful ? 0 : 1;
 }\endcode
 
-  VC++: Compile and run (Ctrl+F5).
+\b  VC++: Compile and run (Ctrl+F5).
 
-  Unix: First build. Since we don't have all the file yet, let's create them
+\b  Unix: First build. Since we don't have all the files yet, let's create them
   and build our application for the first time:
 \verbatim
 touch Money.h MoneyTest.h MoneyTest.cpp
-aclocal -I /usr/local/share/aclocal
+aclocal -I /usr/local/share/aclocal # you may need to use /usr/share/aclocal instead
 autoconf
-automake -a
 touch NEWS README AUTHORS ChangeLog # To make automake happy
+automake -a
 ./configure
 make check\endverbatim
 
   Our application will report that everything
-is fine and no test were run. So let's add some tests...
+is fine and no tests were run. So let's add some tests...
 
 
 
@@ -191,7 +192,7 @@ we can put our tests, and add single test to test Money constructor:
 
 #include <cppunit/extensions/HelperMacros.h>
 
-class MoneyTest : public CppUnit::TestFixture
+class MoneyTest : public CPPUNIT_NS::TestFixture
 {
   CPPUNIT_TEST_SUITE( MoneyTest );
   CPPUNIT_TEST( testConstructor );
@@ -214,8 +215,8 @@ not using any for now.
 
 <tt>MoneyTest.cpp</tt>
 \code
-#include "stdafx.h"
 #include "MoneyTest.h"
+#include "Money.h"
 
 // Registers the fixture into the 'registry'
 CPPUNIT_TEST_SUITE_REGISTRATION( MoneyTest );
@@ -305,7 +306,7 @@ class Money
 public:
   Money( double amount, std::string currency )
     : m_amount( amount )
-    , m_currency( currency )
+    , m_currency( m_currency )
   {
   }
 
@@ -357,7 +358,7 @@ Let's add some functionnality to our Money class.
 
 \subsection sec_equal Testing for equality
 
-  We want to check if to Money object are equal. Let's start by adding
+  We want to check if two Money object are equal. Let's start by adding
 a new test to the suite, then add our method:
 
 <tt>MoneyTest.h</tt>
@@ -426,6 +427,16 @@ Compile, run. Finally got it working!
 
   Let's add our test 'testAdd' to MoneyTest. You know the routine...
 
+<tt>MoneyTest.h</tt>
+\code
+  ...
+  CPPUNIT_TEST( testAdd );
+  CPPUNIT_TEST_SUITE_END();
+public:
+  ...
+  void testAdd();
+\endcode
+
 <tt>MoneyTest.cpp</tt>
 \code
 void 
@@ -445,10 +456,10 @@ MoneyTest::testAdd()
 }\endcode
 
   While writing that test case, you ask yourself, what is the result of
-adding money of currencies. Obviously this is an error and it should be
-reported, say let throw an exception, say \c IncompatibleMoneyError, 
+adding money of different currencies? Obviously this is an error and it should be
+reported, for example, by throwing an exception (e.g. \c IncompatibleMoneyError)
 when the currencies are not equal. We will write another test case
-for this later. For now let get our testAdd() case working:
+for this later. For now let's get our testAdd() case working:
 
 <tt>Money.h</tt>
 \code
@@ -465,23 +476,19 @@ public:
 
 Compile, run. Miracle, everything is fine! Just to be sure the test is indeed
 working, in the above code, change \c m_amount \c += to \c -=. Build and 
-check that it fails (always be suspicious of test that work the first 
+check that it fails (always be suspicious of tests that work the first 
 time: you may have forgotten to add it to the suite for example)! 
-Change the code back so that all the tests are working.
-  
-  Let's the incompatible money test case before we forget about it...
-That test case expect an \c IncompatibleMoneyError exception to be thrown. 
-%CppUnit can test that for us, you need to specify that the test case
-expect an exception when you add it to the suite:
-  
+Change the code back so that all tests work.
+
+Let's write the incompatible money test case before we forget about it...
+That test case expects an \c IncompatibleMoneyError exception to be thrown. 
+You can check that with %CppUnit:
+
 <tt>MoneyTest.h</tt>
 \code
-class MoneyTest : public CppUnit::TestFixture
-{
-  CPPUNIT_TEST_SUITE( MoneyTest );
-  CPPUNIT_TEST( testConstructor );
-  CPPUNIT_TEST( testEqual );
-  CPPUNIT_TEST( testAdd );
+...
+#include "Money.h"
+...
   CPPUNIT_TEST_EXCEPTION( testAddThrow, IncompatibleMoneyError );
   CPPUNIT_TEST_SUITE_END();
 public:
@@ -489,8 +496,8 @@ public:
   void testAddThrow();
 };\endcode
 
-By convention, you end the name of such tests with \c 'Throw', that way, you
-know that the test expect an exception to be thrown. Let's write our test case:
+By convention, you end the name of such tests with \c 'Throw'. That way, you
+know the test expects an exception to be thrown. Let's write our test case:
 
 <tt>MoneyTest.cpp</tt>
 \code
@@ -522,8 +529,8 @@ public:
 };
 \endcode
 
-  Compile. As expected testAddThrow() fail... Let's fix that:
-  
+  Compile. As expected, testAddThrow() fails... Let's fix that:
+
 <tt>Money.h</tt>
 \code
   Money &operator +=( const Money &other )

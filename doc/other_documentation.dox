@@ -5,7 +5,7 @@
  The first port of JUnit to C++ was done
  by Michael Feathers. His versions
  can be found on the 
- <a href="http://www.xprogramming.com/software.htm">
+ <a href="https://web.archive.org/web/20111230014200/http://www.xprogramming.com/software.htm">
  XProgramming software page</a>. They are os-specific,
  so Jerome Lacoste provided a port to Unix/Solaris.
  His version can be found on the same page.
@@ -25,6 +25,18 @@
  the WikiWiki Pages on CppUnit</a>. There you can also
  find the original versions and various ports to other
  OSses and languages.
+
+ \section _build Build
+ If you want to build just this documentation, you will
+ need to install `doxygen` and `graphviz`, then run:
+ ~~~~~{.sh}
+ git clone git://anongit.freedesktop.org/git/libreoffice/cppunit/
+ cd cppunit
+ ./autogen.sh
+ ./configure
+ cd doc
+ make
+ ~~~~~
  
  \section _license License
  This library is released under
