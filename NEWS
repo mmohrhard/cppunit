@@ -1,3 +1,24 @@
+  New in CppUnit 1.15.0:
+  ---------------------
+
+* Portability:
+
+  - Fix Wdefaulted-function-deleted warning with clang
+
+  New in CppUnit 1.15.0:
+  ---------------------
+
+  - Report (un)signed character as intergers
+
+  - add CPPUNIT_TEST_FIXTURE()
+
+  - add message_to_string trait to allow custom string formatters
+
+* Portability:
+  - Fix build with gcc 9
+
+  - Fix various compiler warnings
+
   New in CppUnit 1.14.0:
   ---------------------
 
