@@ -42,8 +42,8 @@ public:
 
   TestSuiteBuilderContextBase(TestSuiteBuilderContextBase const &) = default;
   TestSuiteBuilderContextBase(TestSuiteBuilderContextBase &&) = default;
-  TestSuiteBuilderContextBase & operator =(TestSuiteBuilderContextBase const &) = default;
-  TestSuiteBuilderContextBase & operator =(TestSuiteBuilderContextBase &&) = default;
+  TestSuiteBuilderContextBase & operator =(TestSuiteBuilderContextBase const &) = delete;
+  TestSuiteBuilderContextBase & operator =(TestSuiteBuilderContextBase &&) = delete;
 
   /*! \brief Adds a test to the fixture suite.
    *
