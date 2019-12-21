@@ -1,5 +1,5 @@
 # Include cookbook.html in distro
-EXTRA_DIST = money.dsp money.dsw configure.ac StdAfx.cpp
+EXTRA_DIST = money.vcproj configure.ac StdAfx.cpp
 
 AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_srcdir)/include
 

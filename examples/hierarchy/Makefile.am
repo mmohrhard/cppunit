@@ -1,4 +1,4 @@
-EXTRA_DIST = hierarchy.dsw hierarchy.dsp
+EXTRA_DIST = hierarchy.vcproj
 
 TESTS = hierarchy
 XFAIL_TESTS = hierarchy
