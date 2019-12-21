@@ -513,7 +513,7 @@ Now, you need to run your application after compilation.
 With Visual C++, this is done in <em>Project Settings/Post-Build step</em>, 
 by adding the following command: <tt>"$(TargetPath)"</tt>. It is expanded to 
 the application executable path. Look up the project 
-<tt>examples/cppunittest/CppUnitTestMain.dsp</tt> which
+<tt>examples/cppunittest/CppUnitTestMain.vcproj</tt> which
 use that technic.
 
 

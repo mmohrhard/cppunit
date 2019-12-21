@@ -2,11 +2,10 @@ Frequently Asked Questions: See doc/FAQ
 
 
 At the current time, the only supported WIN32 platform is 
-Microsoft Visual C++. You must have VC++ 6.0 at least.
+Microsoft Visual C++. You must have VC++ 2010 at least.
 
 Quick Steps to compile & run a sample using the GUI TestRunner:
-- Open examples/examples.dsw in VC++ (contains all the samples).
-  VC7 will ask you if you want to convert, anwser 'yes to all'.
+- Open examples/examplesXXXX.sln in VC++ (contains all the samples).
 - Make HostApp the Active project
 - Compile
 - Run the project
@@ -86,7 +85,7 @@ Building:
 Testing:
 --------
 
-* Open the workspace examples/Examples.dsw.
+* Open the workspace examples/examplesXXXX.sln.
 * Make CppUnitTestApp the active project.
 * Select the configuration you build the library for.
 * Compile and run the project. The TestRunner GUI should appear.
@@ -96,7 +95,7 @@ Libraries:
 ----------
 
 All the compiled libraries and DLL can be found in the 'lib' directory.
-Most libraries can be build from src/CppUnitLibraries.dsw workspace.
+Most libraries can be build from src/CppUnitLibrariesXXXX.sln workspace.
 
 lib\:
 cppunit.lib				: CppUnit static library "Multithreaded DLL"

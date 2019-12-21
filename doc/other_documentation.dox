@@ -130,7 +130,7 @@ CPPUNIT_PLUGIN_IMPLEMENT();\endverbatim
  * - Add your tests
  * - You're done !
  *
- * See examples/simple/simple_plugin.dsp for an example.
+ * See examples/simple/simple_plugin.vcproj for an example.
  *
  * Notes to VC++ users: 
  * - you can run a post-build check on the plug-in. Add the following line to your

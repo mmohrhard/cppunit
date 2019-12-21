@@ -1,7 +1,7 @@
-simple/simple.dsp: A simple CppUnit's example. Basic TextTestRunner and a single 'standard' 
+simple/simple.vcproj: A simple CppUnit's example. Basic TextTestRunner and a single 'standard'
 	TestFixture. A good starting point
 
-simple/simple_plugin.dsp: Like 'simple', but creates a test plug-in. The test plug-in can
+simple/simple_plugin.vcproj: Like 'simple', but creates a test plug-in. The test plug-in can
 	be run with DllPlugInRunner.
 
 hierarchy/: A simple example that demonstrate the use of helper macros with template
