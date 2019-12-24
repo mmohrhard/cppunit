@@ -5,6 +5,8 @@
 
   - Fix Wdefaulted-function-deleted warning with clang
 
+  - Remove old Visual Studio project files
+
   New in CppUnit 1.15.0:
   ---------------------
 
